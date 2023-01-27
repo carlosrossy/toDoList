@@ -42,6 +42,9 @@ export function Home() {
                 </View>
             </View>
 
+            <View style={styles.bar}>
+
+            </View>
         </View>
     )
 }
@@ -115,6 +118,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
-
+    },
+    bar: {
+        width: "89%",
+        marginTop: 24,
+        marginLeft: 24,
+        marginRight: 24,
+        height: 1,
+        backgroundColor: '#333333'
     }
 })
