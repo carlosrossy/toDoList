@@ -3,11 +3,65 @@ import { Alert, StyleSheet, View, Image, TextInput, TouchableOpacity, Text } fro
 import { Ionicons } from '@expo/vector-icons';
 
 import logo from '../assets/Logo.png';
+import { Task } from '../components/Task';
+import { Input } from '../components/Input';
 
 export function Home() {
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [counterTask, setCounterTask] = useState(0);
 
-    function handleTaskAdd() {
-        console.log("Adicionou")
+    function handleAddTask(newTaskTitle: string) {
+        const taskWithSameTitle = tasks.find(task => task.title == newTaskTitle)
+
+        if (taskWithSameTitle) {
+            return Alert.alert('Task já cadastrada', 'Você não pode cadastrar uma task com o mesmo nome')
+        }
+
+        const newTask = {
+            id: new Date().getTime(),
+            title: newTaskTitle,
+            done: false
+        }
+
+        setTasks(oldTaks => [...oldTaks, newTask])
+    }
+
+    function handleToggleTaskDone(id: number) {
+        const updatedTask = tasks.map(tasks => ({ ...tasks }))
+
+        const foundItem = updatedTask.find(item => item.id === id)
+
+        if (!foundItem) {
+            return;
+        }
+
+        foundItem.done = !foundItem.done
+
+        if (foundItem.done) {
+            setCounterTask(counterTask + 1)
+        } else {
+            setCounterTask(counterTask - 1)
+        }
+        setTasks(updatedTask)
+    }
+
+    function handleRemoveTask(id: number) {
+        Alert.alert('Remover item', 'Tem certeza que você deseja remover esse item?', [
+            {
+                style: 'cancel',
+                text: 'não'
+            },
+            {
+                style: 'destructive',
+                text: 'sim',
+                onPress: () => {
+                    const updatedTask = tasks.filter(task => task.id != id)
+
+                    setTasks(updatedTask)
+                    setCounterTask(counterTask - 1)
+                }
+            }
+        ])
     }
 
     return (
@@ -16,35 +70,33 @@ export function Home() {
                 <Image source={logo} />
             </View>
 
-            <View style={styles.form}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Adicione uma nova tarefa'
-                    placeholderTextColor='#808080'
-                />
-                <TouchableOpacity style={styles.button} onPress={handleTaskAdd}>
-                    <Ionicons name="add-circle-outline" size={24} color="#FFFF" />
-                </TouchableOpacity>
-            </View>
+            <Input addTask={handleAddTask} />
 
             <View style={styles.accountants}>
                 <View style={styles.Counter}>
                     <Text style={styles.maids}>Criadas</Text>
                     <View style={styles.CounterBackground}>
-                        <Text style={styles.tasksCounter}>0</Text>
+                        <Text style={styles.tasksCounter}>{tasks.length}</Text>
                     </View>
                 </View>
                 <View style={styles.Counter}>
                     <Text style={styles.completed}>Concluídas</Text>
                     <View style={styles.CounterBackground}>
-                        <Text style={styles.tasksCounter}>0</Text>
+                        <Text style={styles.tasksCounter}>{counterTask}</Text>
                     </View>
                 </View>
             </View>
 
-            <View style={styles.bar}>
+            <View style={styles.bar} />
 
+            <View style={styles.containerTask}>
+                <Task
+                    tasks={tasks}
+                    toggleTaskDone={handleToggleTaskDone}
+                    removeTask={handleRemoveTask}
+                />
             </View>
+
         </View>
     )
 }
@@ -67,15 +119,6 @@ const styles = StyleSheet.create({
         marginTop: -38,
         flexDirection: 'row',
         marginBottom: 32
-    },
-    input: {
-        flex: 1,
-        height: 56,
-        backgroundColor: '#262626',
-        borderRadius: 6,
-        color: '#ffff',
-        padding: 16,
-        fontSize: 16
     },
     button: {
         height: 56,
@@ -126,5 +169,9 @@ const styles = StyleSheet.create({
         marginRight: 24,
         height: 1,
         backgroundColor: '#333333'
+    },
+    containerTask: {
+        width: "100%",
+        paddingHorizontal: 24,
     }
 })
