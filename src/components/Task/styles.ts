@@ -38,4 +38,20 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    containerEmpty: {
+        marginTop: 80,
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    TitleEmpty: {
+        marginTop: 20,
+        fontSize: 16,
+        color: "#808080",
+        fontWeight: 'bold'
+    },
+    subTitleEmpty: {
+        fontSize: 15,
+        color: "#808080",
+    }
 });

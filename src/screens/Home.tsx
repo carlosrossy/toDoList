@@ -58,7 +58,12 @@ export function Home() {
                     const updatedTask = tasks.filter(task => task.id != id)
 
                     setTasks(updatedTask)
-                    setCounterTask(counterTask - 1)
+                    if (counterTask === 0) {
+                        setCounterTask(counterTask)
+                    } else {
+                        setCounterTask(counterTask - 1)
+                    }
+
                 }
             }
         ])

@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import { styles } from "./styles";
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
+import Clipboard from '../../assets/Clipboard.png';
 export interface Task {
     id: number;
     title: string;
@@ -44,6 +45,13 @@ export function Task({ tasks, toggleTaskDone, removeTask }: TasksListProps) {
                     </View>
                 )
             }}
+            ListEmptyComponent={
+                <View style={styles.containerEmpty}>
+                    <Image source={Clipboard} />
+                    <Text style={styles.TitleEmpty}>Você ainda não tem tarefas cadastradas</Text>
+                    <Text style={styles.subTitleEmpty}>Crie tarefas e organize seus itens a fazer</Text>
+                </View>
+            }
         />
     )
 }   
