@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, StyleSheet, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, View, Image, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import logo from '../assets/Logo.png';
@@ -27,6 +27,20 @@ export function Home() {
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.accountants}>
+                <View style={styles.Counter}>
+                    <Text style={styles.maids}>Criadas</Text>
+                    <View style={styles.CounterBackground}>
+                        <Text style={styles.tasksCounter}>0</Text>
+                    </View>
+                </View>
+                <View style={styles.Counter}>
+                    <Text style={styles.completed}>Concluídas</Text>
+                    <View style={styles.CounterBackground}>
+                        <Text style={styles.tasksCounter}>0</Text>
+                    </View>
+                </View>
+            </View>
 
         </View>
     )
@@ -49,7 +63,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         marginTop: -38,
         flexDirection: 'row',
-        // marginBottom: 42
+        marginBottom: 32
     },
     input: {
         flex: 1,
@@ -68,5 +82,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 10
+    },
+    accountants: {
+        width: "100%",
+        paddingHorizontal: 24,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    maids: {
+        fontSize: 14,
+        color: '#4EA8DE'
+    },
+    completed: {
+        fontSize: 14,
+        color: '#8284FA'
+    },
+    tasksCounter: {
+        fontSize: 12,
+        color: '#ffff'
+    },
+    Counter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    CounterBackground: {
+        marginLeft: 10,
+        width: 25,
+        height: 20,
+        backgroundColor: '#333333',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10
+
     }
 })
